@@ -45,7 +45,7 @@ class TodoControllerTests {
 
 	@Autowired
 	private RestDocumentationContextProvider restDocumentationContextProvider;
-	
+
 	@Autowired
 	private TodoService service;
 
@@ -89,9 +89,8 @@ class TodoControllerTests {
 						responseFields(
 								fieldWithPath("[].id").description("unique todo id. auto-generated in database layer"), //
 								(fieldWithPath("[].activityName").description("activity name (not null)")), //
-								(fieldWithPath("[].progress")
-										.description("you can set following progress: " + progressFieldValue()
-												+ ".\n initial value is " + Progress.Open)), //
+								(fieldWithPath("[].progress").description("you can set following progress: "
+										+ progressFieldValue() + ".\n initial value is " + Progress.Open)), //
 								(fieldWithPath("[].category").description(
 										"you can set following category: " + categoryFieldValue() + " (nullable)")),
 								(fieldWithPath("[].label").description("label (nullable)")).optional() //
@@ -111,9 +110,8 @@ class TodoControllerTests {
 						responseFields(
 								fieldWithPath("id").description("unique todo id. auto-generated in database layer"), //
 								(fieldWithPath("activityName").description("activity name (not null)")), //
-								(fieldWithPath("progress")
-										.description("you can set following progress: " + progressFieldValue()
-												+ ".\n initial value is " + Progress.Open)), //
+								(fieldWithPath("progress").description("you can set following progress: "
+										+ progressFieldValue() + ".\n initial value is " + Progress.Open)), //
 								(fieldWithPath("category").description(
 										"you can set following category: " + categoryFieldValue() + " (nullable)")),
 								(fieldWithPath("label").description("label (nullable)")).optional() //
@@ -134,7 +132,7 @@ class TodoControllerTests {
 	@DirtiesContext
 	void shouldCreateTodo() throws Exception {
 
-		var todo = new Todo("test",null, "test");
+		var todo = new Todo("test", null, "test");
 		String json = convertJson(todo);
 
 		this.mockMvc.perform(post(BASE_PATH) //
