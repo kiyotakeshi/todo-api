@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Todo {
 
+	// TODO: UUID にする
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 自動インクリメントで一意の値を生成
 	// sequence を指定して作成する場合
@@ -18,7 +19,6 @@ public class Todo {
 	private String activityName;
 
 	@Enumerated(EnumType.STRING)
-	@NotNull
 	private Progress progress;
 
 	@Enumerated(EnumType.STRING)
@@ -26,9 +26,10 @@ public class Todo {
 
 	private String label;
 
-	public Todo(@NotNull String activityName, @NotNull Progress progress, Category category, String label) {
+	// TODO: created_at カラムを並び替えのために作る
+
+	public Todo(@NotNull String activityName, @NotNull Category category, String label) {
 		this.activityName = activityName;
-		this.progress = progress;
 		this.category = category;
 		this.label = label;
 	}
@@ -74,8 +75,8 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		return "Todo{" + "id=" + id + ", activityName='" + activityName + '\'' + ", progress=" + progress + ", colors="
-				+ category + ", category='" + category + '\'' + '}';
+		return "Todo{" + "id=" + id + ", activityName='" + activityName + '\'' + ", progress=" + progress
+				+ ", category=" + category + ", label='" + label + '\'' + '}';
 	}
 
 }

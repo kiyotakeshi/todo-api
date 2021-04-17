@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,6 +16,12 @@ class TodoTests {
 
 	@Test
 	void mapping() {
+
+		// // for check DML
+		// var todo = new Todo("new", Category.Hobby, "test");
+		// todo.setProgress(Progress.Open);
+		// this.em.persistAndFlush(todo);
+
 		var todo1 = this.em.find(Todo.class, 1000L);
 		assertThat(todo1.getActivityName()).isEqualTo("go to supermarket");
 		assertThat(todo1.getCategory()).isEqualTo(Category.Housework);
@@ -22,12 +29,7 @@ class TodoTests {
 	}
 
 	@Test
-	void newTodo() {
-		var todo = new Todo("new", Progress.Open, Category.Hobby, "test");
-		this.em.persistAndFlush(todo);
-	}
-
-	@Test
+	@DirtiesContext
 	void update() {
 		var todo1 = this.em.find(Todo.class, 1000L);
 		todo1.setActivityName("go to bank");

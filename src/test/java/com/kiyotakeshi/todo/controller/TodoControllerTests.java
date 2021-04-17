@@ -45,8 +45,7 @@ class TodoControllerTests {
 
 	@Autowired
 	private RestDocumentationContextProvider restDocumentationContextProvider;
-
-	// TODO: mock object (@MockBean) に変える
+	
 	@Autowired
 	private TodoService service;
 
@@ -92,7 +91,7 @@ class TodoControllerTests {
 								(fieldWithPath("[].activityName").description("activity name (not null)")), //
 								(fieldWithPath("[].progress")
 										.description("you can set following progress: " + progressFieldValue()
-												+ ".\n initial value is " + Progress.Open + " (not null)")), //
+												+ ".\n initial value is " + Progress.Open)), //
 								(fieldWithPath("[].category").description(
 										"you can set following category: " + categoryFieldValue() + " (nullable)")),
 								(fieldWithPath("[].label").description("label (nullable)")).optional() //
@@ -114,7 +113,7 @@ class TodoControllerTests {
 								(fieldWithPath("activityName").description("activity name (not null)")), //
 								(fieldWithPath("progress")
 										.description("you can set following progress: " + progressFieldValue()
-												+ ".\n initial value is " + Progress.Open + " (not null)")), //
+												+ ".\n initial value is " + Progress.Open)), //
 								(fieldWithPath("category").description(
 										"you can set following category: " + categoryFieldValue() + " (nullable)")),
 								(fieldWithPath("label").description("label (nullable)")).optional() //
@@ -135,7 +134,7 @@ class TodoControllerTests {
 	@DirtiesContext
 	void shouldCreateTodo() throws Exception {
 
-		var todo = new Todo("test", Progress.Open, null, "test");
+		var todo = new Todo("test",null, "test");
 		String json = convertJson(todo);
 
 		this.mockMvc.perform(post(BASE_PATH) //
@@ -146,24 +145,6 @@ class TodoControllerTests {
 				.andExpect(content().json(
 						"{\"id\":1003,\"activityName\":\"test\",\"progress\":\"Open\",\"category\":null,\"label\":\"test\"}"))
 				.andDo(document("postTodo"));
-	}
-
-	@Test
-	@DisplayName("Todo を作成時のステータスは常に Open であることを確認")
-	@DirtiesContext
-	void shouldFirstCreatedTodoProgressIsOpen() throws Exception {
-
-		var todo = new Todo("test", Progress.Done, null, "test");
-		String json = convertJson(todo);
-
-		this.mockMvc.perform(post(BASE_PATH) //
-				.contentType(MediaType.APPLICATION_JSON).content(json)).andDo(print()) //
-				.andExpect(status().isCreated()) //
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(header().string("Location", BASE_PATH + 1003))
-				.andExpect(content().json(
-						"{\"id\":1003,\"activityName\":\"test\",\"progress\":\"Open\",\"category\":null,\"label\":\"test\"}"))
-				.andDo(document("postTodoProgressDone"));
 	}
 
 	@Test

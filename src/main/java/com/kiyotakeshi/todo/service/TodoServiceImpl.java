@@ -1,6 +1,7 @@
 package com.kiyotakeshi.todo.service;
 
 import com.kiyotakeshi.todo.entity.Category;
+import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
 import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,8 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public Todo save(Todo todo) {
+		/** {@link TodoServiceTests#newTodoStatusIsOpen()}, */
+		todo.setProgress(Progress.Open);
 		return this.todoRepository.save(todo);
 	}
 

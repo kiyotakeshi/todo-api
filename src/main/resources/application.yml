@@ -18,3 +18,5 @@ spring:
     baseline-description: Initial
 #    @see org/springframework/boot/autoconfigure/flyway/FlywayProperties.java
     locations: "classpath:db/migration"
+# パラメータの値をログに表示 ex.) binding parameter [1] as [INTEGER] - [1]
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder: TRACE

@@ -19,11 +19,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/todo")
-@CrossOrigin(origins = { 
-    "http://localhost",
-    "http://www.bullstechnology.com",
-    "https://www.bullstechnology.com"
- })
+@CrossOrigin(origins = { "http://localhost:3000", "http://www.bullstechnology.com:3000",
+		"https://www.bullstechnology.com:3000" })
 public class TodoApiController {
 
 	private static final String BASE_PATH = "/api/todo/";
@@ -58,8 +55,6 @@ public class TodoApiController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					String.format("Request contains incorrect data = [%s]", getErrors(bindingResult)));
 		}
-		// first created todo status is always Open
-		todo.setProgress(Progress.Open);
 		var savedTodo = this.todoService.save(todo);
 		return ResponseEntity.created(URI.create(BASE_PATH + savedTodo.getId())).body(savedTodo);
 	}

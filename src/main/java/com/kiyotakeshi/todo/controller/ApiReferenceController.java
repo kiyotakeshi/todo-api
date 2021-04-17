@@ -8,9 +8,9 @@ public class ApiReferenceController {
 
 	/**
 	 * return API reference
-	 * @return index.html
+	 * @return api-reference.html
 	 */
-	@RequestMapping("/api")
+	@RequestMapping({ "/", "/index", "/api" })
 	public String index() {
 		return "api-reference";
 	}

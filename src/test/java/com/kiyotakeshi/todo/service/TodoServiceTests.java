@@ -3,6 +3,7 @@ package com.kiyotakeshi.todo.service;
 import com.kiyotakeshi.todo.entity.Category;
 import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @SpringBootTest
 @ComponentScan(basePackageClasses = TodoService.class)
 // @ActiveProfiles("test") // if you set application-test.yml
-class TodoServiceTests {
+public class TodoServiceTests {
 
 	@Autowired
 	TodoService service;
@@ -46,10 +47,18 @@ class TodoServiceTests {
 	@Test
 	void save() {
 		int before = this.service.findAll().size();
-		var todo = new Todo("sleep", Progress.Open, Category.None, "test");
+		var todo = new Todo("sleep", Category.None, "test");
 		this.service.save(todo);
 		int after = this.service.findAll().size();
 		assertThat(before + 1).isEqualTo(after);
+	}
+
+	@Test
+	@DisplayName("Todo 作成時の progress は常に Open であること")
+	void newTodoStatusIsOpen() {
+		var todo = new Todo("sleep", Category.None, "test");
+		Todo savedTodo = this.service.save(todo);
+		assertThat(savedTodo.getProgress()).isEqualTo(Progress.Open);
 	}
 
 	@Test
@@ -87,5 +96,4 @@ class TodoServiceTests {
 			this.service.findById(1001L).getId();
 		});
 	}
-
 }
