@@ -3,10 +3,10 @@ server:
 spring:
   jpa:
     show-sql: true
-#  security:
-#    user:
-#      name: user
-#      password: aaaaaaaaaaaaa
+  security:
+    user:
+      name: user
+      password: password
   datasource:
     url: jdbc:postgresql://localhost:5432/todo
     driverClassName: org.postgresql.Driver
